@@ -1,0 +1,85 @@
+import java.util.Scanner;
+ 
+public class Floid {
+    static int n;
+    static int max;
+    static int min;
+ 
+    public static void main(String[] args) {
+        Scanner M = new Scanner(System.in);
+        n = M.nextInt();
+        max = 100000000;
+      
+        int a[][] = new int[n][n];
+        int h[][] = new int[n][n];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++) {
+                a[i][j] = M.nextInt();
+                if (i==j)
+                    a[i][j] = max;
+            }
+        GO(a, h);
+ 
+    }
+ 
+    private static void GO(int[][] a, int[][] h) {
+        DOH(a, h);
+
+        CHANGE(a, h);
+
+        int ans[][] = new int[n][n];
+        PR(a);
+ 
+    }
+ 
+    private static void PR(int[][] a) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i==j)
+                    System.out.print(0 + " ");
+                else
+                    System.out.print(a[i][j] + " ");
+            }
+            System.out.println();
+        }
+ 
+    }
+ 
+    private static void CHANGE(int[][] a, int[][] h) {
+        for (int j = 0; j < n; j++) {
+            for (int i = 0; i < n; i++)
+ 
+                if (a[i][j] != max & i != j)
+                    for (int c = 0; c < n; c++) {
+                        if (conecteed(i, j, c))
+                            continue;
+                        if (a[i][c] > a[i][j] + a[j][c]) {
+                            a[i][c] = a[i][j] + a[j][c];
+                            h[i][c] = h[i][j];
+                        }
+    
+                    }
+        }
+ 
+    }
+ 
+    private static boolean conecteed(int i, int j, int c) {
+        if (i == j || i == c || j == c)
+            return true;
+        return false;
+    }
+ 
+
+ 
+    private static void DOH(int[][] a, int[][] h) {
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++) {
+ 
+                if (a[i][j] != max)
+ 
+                    h[i][j] = j;
+            }
+ 
+    }
+ 
+}
